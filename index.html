@@ -15,39 +15,39 @@
       <div class="logo">FinPlan ✨</div>
       <nav class="nav">
         <a href="#landing">首頁</a>
-        <a href="#planner">財務神模式</a>
-        <a href="#dashboard">翻轉計畫</a>
+        <a href="#questionnaire">問答診斷</a>
+        <a href="#report">完整報告</a>
         <a href="#backtest">回測指引</a>
         <a href="#api">API 連結</a>
       </nav>
-      <button class="primary small">立即試算</button>
+      <button class="primary small" data-scroll="questionnaire">立即試算</button>
     </header>
 
     <main>
       <section id="landing" class="hero">
         <div class="hero-text">
           <span class="badge">月光族救援模式</span>
-          <h1>給你一份可以翻轉赤字的財務計畫</h1>
+          <h1>用問答流程幫你生成一份完整財務報告</h1>
           <p>
-            告訴我們你的收入、支出、負債與目標，FinPlan
-            會用「止血 → 修復 → 投資」的流程，給你最有可能上軌道的建議。
+            系統會一步步詢問你的收入、支出、負債與目標，整理成能直接使用的
+            現金流翻轉計畫與行動清單。
           </p>
           <div class="hero-actions">
-            <button class="primary">開始財務診斷</button>
-            <button class="ghost">看看範例結果</button>
+            <button class="primary" data-scroll="questionnaire">開始財務診斷</button>
+            <button class="ghost" data-scroll="report">看看範例結果</button>
           </div>
           <div class="hero-highlights">
             <div class="mini-card">
               <span>今日任務</span>
-              <strong>止血 + 收支平衡</strong>
+              <strong>先止血、再回正</strong>
             </div>
             <div class="mini-card">
-              <span>目標狀態</span>
-              <strong>30 天轉正</strong>
+              <span>輸出內容</span>
+              <strong>完整財務報告</strong>
             </div>
             <div class="mini-card">
-              <span>投資策略</span>
-              <strong>等現金流轉正</strong>
+              <span>適用族群</span>
+              <strong>MBA / 學生 / 轉職</strong>
             </div>
           </div>
         </div>
@@ -68,100 +68,95 @@
         </div>
       </section>
 
-      <section id="planner" class="section">
+      <section id="questionnaire" class="section">
         <div class="section-header">
-          <h2>財務神模式：輸入你的真實數字</h2>
-          <p>系統會算出「最可能翻轉赤字」的現金流路徑。</p>
+          <h2>問答式財務診斷</h2>
+          <p>一步步回答問題，系統會自動生成完整報告。</p>
         </div>
-        <form id="planner-form" class="input-form">
-          <div class="input-grid">
-            <div class="form-group">
-              <label for="income">每月收入（稅後）</label>
-              <input id="income" type="number" placeholder="例如 55000" />
-            </div>
-            <div class="form-group">
-              <label for="expense">每月支出</label>
-              <input id="expense" type="number" placeholder="例如 67000" />
-            </div>
-            <div class="form-group">
-              <label for="debt">信用卡/負債總額</label>
-              <input id="debt" type="number" placeholder="例如 120000" />
-            </div>
-            <div class="form-group">
-              <label for="cash">現金/存款</label>
-              <input id="cash" type="number" placeholder="例如 20000" />
-            </div>
-            <div class="form-group">
-              <label for="target">每月希望存下的金額</label>
-              <input id="target" type="number" placeholder="例如 3000" />
-            </div>
-            <div class="form-group">
-              <label for="goal-months">想在幾個月內上軌道？</label>
-              <input id="goal-months" type="number" placeholder="例如 12" />
+        <div class="questionnaire-card">
+          <div class="question-progress">
+            <span id="step-count">1 / 1</span>
+            <div class="progress-track">
+              <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
             </div>
           </div>
-          <button type="button" id="generate-plan" class="primary">
-            產生翻轉計畫
-          </button>
-        </form>
+          <div class="question-body">
+            <h3 id="question-title">你的目前身分</h3>
+            <p id="question-help">選擇最接近的狀態。</p>
+            <div id="question-input" class="question-input"></div>
+          </div>
+          <div class="question-actions">
+            <button id="prev-btn" class="ghost">上一步</button>
+            <div class="question-actions-right">
+              <button id="save-btn" class="ghost">儲存進度</button>
+              <button id="next-btn" class="primary">下一步</button>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section id="dashboard" class="section dashboard">
+      <section id="report" class="section report-section">
         <div class="section-header">
-          <h2>翻轉計畫摘要</h2>
-          <p>用最簡單的數字，讓你知道下一步該做什麼。</p>
+          <h2>完整財務報告</h2>
+          <p>根據你的回答自動產生，隨時更新。</p>
         </div>
-        <div class="dashboard-grid">
-          <div class="panel main-panel">
-            <div class="status-line">
-              <span id="status-label" class="status-pill warning">赤字中</span>
-              <strong id="cashflow">NT$ 0</strong>
+        <div class="report-grid">
+          <div class="report-card">
+            <h3>每月現金流摘要</h3>
+            <div class="report-stats">
+              <div>
+                <span>總收入</span>
+                <strong id="summary-income">NT$ 0</strong>
+              </div>
+              <div>
+                <span>必要支出</span>
+                <strong id="summary-essential">NT$ 0</strong>
+              </div>
+              <div>
+                <span>彈性支出</span>
+                <strong id="summary-discretionary">NT$ 0</strong>
+              </div>
+              <div>
+                <span>債務月付</span>
+                <strong id="summary-debt-payments">NT$ 0</strong>
+              </div>
+              <div>
+                <span>每月現金流</span>
+                <strong id="summary-cashflow">NT$ 0</strong>
+              </div>
             </div>
-            <div class="result-grid">
-              <div class="result-card">
-                <span>目標月收入</span>
-                <strong id="required-income">NT$ 0</strong>
-                <small id="income-gap">還差 NT$ 0</small>
-              </div>
-              <div class="result-card">
-                <span>建議削減支出</span>
-                <strong id="cut-amount">NT$ 0</strong>
-                <small>先從非必要支出下手</small>
-              </div>
-              <div class="result-card">
-                <span>每月可投資金額</span>
-                <strong id="invest-amount">NT$ 0</strong>
-                <small>現金流轉正後啟動</small>
-              </div>
-            </div>
-            <ul id="action-list" class="action-list">
-              <li>輸入數字後會出現行動清單。</li>
-            </ul>
           </div>
-
-          <div class="panel side-panel">
+          <div class="report-card">
+            <h3>翻轉赤字計算</h3>
+            <div class="report-stats">
+              <div>
+                <span>目標月收入</span>
+                <strong id="summary-required-income">NT$ 0</strong>
+              </div>
+              <div>
+                <span>需增加收入</span>
+                <strong id="summary-income-gap">NT$ 0</strong>
+              </div>
+              <div>
+                <span>可削減支出</span>
+                <strong id="summary-cut-amount">NT$ 0</strong>
+              </div>
+            </div>
+          </div>
+          <div class="report-card">
             <h3>緊急預備金進度</h3>
-            <p>目標為 6 個月生活費。</p>
             <div class="progress big">
               <div class="progress-track">
-                <div id="emergency-progress" class="progress-fill" style="width: 0%"></div>
+                <div id="report-emergency-progress" class="progress-fill" style="width: 0%"></div>
               </div>
-              <span id="emergency-text">NT$ 0 / NT$ 0</span>
-            </div>
-            <div class="tip">
-              <strong>提醒：</strong>赤字期暫停投資，把現金存到緊急預備金。
+              <span id="report-emergency-text">NT$ 0 / NT$ 0</span>
             </div>
           </div>
-
-          <div class="panel side-panel">
-            <h3>投資配置建議</h3>
-            <p id="portfolio-note">現金流轉正後，先用穩健 ETF 建立投資習慣。</p>
-            <ul class="portfolio-list">
-              <li>60% 全市場 ETF（VTI / ITOT）</li>
-              <li>25% 大型股 ETF（VOO / IVV）</li>
-              <li>15% 高品質債券 ETF（BND / AGG）</li>
+          <div class="report-card">
+            <h3>專屬行動清單</h3>
+            <ul id="report-actions" class="action-list">
+              <li>完成問答後會生成專屬建議。</li>
             </ul>
-            <small class="muted">* 僅示範配置，非投資建議。</small>
           </div>
         </div>
       </section>
