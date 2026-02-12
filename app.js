@@ -325,8 +325,7 @@ const generateReport = () => {
   const emergencyProgress = emergencyTarget === 0 ? 0 : Math.min(100, (cash / emergencyTarget) * 100);
 
   if (elements.summaryIncome) elements.summaryIncome.textContent = `NT$ ${formatter.format(income)}`;
-  if (elements.summaryEssential)
-    elements.summaryEssential.textContent = `NT$ ${formatter.format(essential)}`;
+  if (elements.summaryEssential) elements.summaryEssential.textContent = `NT$ ${formatter.format(essential)}`;
   if (elements.summaryDiscretionary)
     elements.summaryDiscretionary.textContent = `NT$ ${formatter.format(discretionary)}`;
   if (elements.summaryDebtPayments)
@@ -366,7 +365,7 @@ const generateReport = () => {
   }
 
   if ((answers.city || "").toLowerCase().includes("ann arbor")) {
-    actions.push("Ann Arbor 生活費偏高，建議每月檢查房租與餐飲支出是否可再優化。);
+    actions.push("Ann Arbor 生活費偏高，建議每月檢查房租與餐飲支出是否可再優化。");
   }
 
   if (elements.reportActions) {
