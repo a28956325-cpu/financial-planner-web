@@ -226,7 +226,6 @@ const elements = {
   summaryCutAmount: document.getElementById("summary-cut-amount"),
   reportEmergencyProgress: document.getElementById("report-emergency-progress"),
   reportEmergencyText: document.getElementById("report-emergency-text"),
-  startQuestionnaire: document.getElementById("start-questionnaire"),
 };
 
 const stored = JSON.parse(localStorage.getItem("finplanAnswers") || "{}");
@@ -246,13 +245,17 @@ const renderQuestion = () => {
   const question = questions[currentIndex];
   if (!question) return;
 
-  elements.stepCount.textContent = `${currentIndex + 1} / ${questions.length}`;
+  if (elements.stepCount) {
+    elements.stepCount.textContent = `${currentIndex + 1} / ${questions.length}`;
+  }
   const progress = ((currentIndex + 1) / questions.length) * 100;
-  elements.progressFill.style.width = `${progress}%`;
+  if (elements.progressFill) {
+    elements.progressFill.style.width = `${progress}%`;
+  }
 
-  elements.questionTitle.textContent = question.label;
-  elements.questionHelp.textContent = question.help || "";
-  elements.questionInput.innerHTML = "";
+  if (elements.questionTitle) elements.questionTitle.textContent = question.label;
+  if (elements.questionHelp) elements.questionHelp.textContent = question.help || "";
+  if (elements.questionInput) elements.questionInput.innerHTML = "";
 
   let input;
   if (question.type === "select") {
@@ -274,9 +277,11 @@ const renderQuestion = () => {
     input.value = answers[question.id];
   }
 
-  elements.questionInput.appendChild(input);
-  elements.prevBtn.disabled = currentIndex === 0;
-  elements.nextBtn.textContent = currentIndex === questions.length - 1 ? "產生報告" : "下一步";
+  if (elements.questionInput) elements.questionInput.appendChild(input);
+  if (elements.prevBtn) elements.prevBtn.disabled = currentIndex === 0;
+  if (elements.nextBtn) {
+    elements.nextBtn.textContent = currentIndex === questions.length - 1 ? "產生報告" : "下一步";
+  }
 };
 
 const saveAnswer = () => {
@@ -284,8 +289,7 @@ const saveAnswer = () => {
   const input = document.getElementById("current-input");
   if (!question || !input) return;
 
-  const value = input.value;
-  answers[question.id] = value;
+  answers[question.id] = input.value;
   localStorage.setItem("finplanAnswers", JSON.stringify(answers));
 };
 
@@ -320,17 +324,30 @@ const generateReport = () => {
   const cash = toNumber(answers.cash);
   const emergencyProgress = emergencyTarget === 0 ? 0 : Math.min(100, (cash / emergencyTarget) * 100);
 
-  elements.summaryIncome.textContent = `NT$ ${formatter.format(income)}`;
-  elements.summaryEssential.textContent = `NT$ ${formatter.format(essential)}`;
-  elements.summaryDiscretionary.textContent = `NT$ ${formatter.format(discretionary)}`;
-  elements.summaryDebtPayments.textContent = `NT$ ${formatter.format(debtPayments)}`;
-  elements.summaryCashflow.textContent = `NT$ ${formatter.format(cashflow)}`;
-  elements.summaryRequiredIncome.textContent = `NT$ ${formatter.format(requiredIncome)}`;
-  elements.summaryIncomeGap.textContent = `NT$ ${formatter.format(incomeGap)}`;
-  elements.summaryCutAmount.textContent = `NT$ ${formatter.format(cutAmount)}`;
+  if (elements.summaryIncome) elements.summaryIncome.textContent = `NT$ ${formatter.format(income)}`;
+  if (elements.summaryEssential)
+    elements.summaryEssential.textContent = `NT$ ${formatter.format(essential)}`;
+  if (elements.summaryDiscretionary)
+    elements.summaryDiscretionary.textContent = `NT$ ${formatter.format(discretionary)}`;
+  if (elements.summaryDebtPayments)
+    elements.summaryDebtPayments.textContent = `NT$ ${formatter.format(debtPayments)}`;
+  if (elements.summaryCashflow)
+    elements.summaryCashflow.textContent = `NT$ ${formatter.format(cashflow)}`;
+  if (elements.summaryRequiredIncome)
+    elements.summaryRequiredIncome.textContent = `NT$ ${formatter.format(requiredIncome)}`;
+  if (elements.summaryIncomeGap)
+    elements.summaryIncomeGap.textContent = `NT$ ${formatter.format(incomeGap)}`;
+  if (elements.summaryCutAmount)
+    elements.summaryCutAmount.textContent = `NT$ ${formatter.format(cutAmount)}`;
 
-  elements.reportEmergencyProgress.style.width = `${emergencyProgress}%`;
-  elements.reportEmergencyText.textContent = `NT$ ${formatter.format(cash)} / NT$ ${formatter.format(emergencyTarget)}`;
+  if (elements.reportEmergencyProgress) {
+    elements.reportEmergencyProgress.style.width = `${emergencyProgress}%`;
+  }
+  if (elements.reportEmergencyText) {
+    elements.reportEmergencyText.textContent = `NT$ ${formatter.format(cash)} / NT$ ${formatter.format(
+      emergencyTarget
+    )}`;
+  }
 
   const actions = [];
   if (cashflow < 0) {
@@ -338,19 +355,23 @@ const generateReport = () => {
     actions.push(`增加收入目標：至少 NT$ ${formatter.format(incomeGap)}。`);
     actions.push(`可削減支出目標：NT$ ${formatter.format(cutAmount)}（先砍娛樂/訂閱/購物）。`);
   } else {
-    actions.push("現金流已轉正，保持每月正現金流。>");
-    actions.push(`每月先存 NT$ ${formatter.format(desiredSavings)} 作為安全金。`);
+    actions.push("現金流已轉正，保持每月正現金流。");
+    if (desiredSavings > 0) {
+      actions.push(`每月先存 NT$ ${formatter.format(desiredSavings)} 作為安全金。`);
+    }
   }
 
   if (debtPayments > 0) {
-    actions.push("優先清高利率債務（雪崩法），降低利息成本。>");
+    actions.push("優先清高利率債務（雪崩法），降低利息成本。);
   }
 
   if ((answers.city || "").toLowerCase().includes("ann arbor")) {
     actions.push("Ann Arbor 生活費偏高，建議每月檢查房租與餐飲支出是否可再優化。);
   }
 
-  elements.reportActions.innerHTML = actions.map((item) => `<li>• ${item}</li>`).join("");
+  if (elements.reportActions) {
+    elements.reportActions.innerHTML = actions.map((item) => `<li>• ${item}</li>`).join("");
+  }
 };
 
 const goNext = () => {
@@ -380,13 +401,14 @@ const init = () => {
     btn.addEventListener("click", () => scrollToSection(btn.dataset.scroll));
   });
 
-  elements.startQuestionnaire?.addEventListener("click", () => scrollToSection("questionnaire"));
-  elements.nextBtn?.addEventListener("click", goNext);
-  elements.prevBtn?.addEventListener("click", goPrev);
-  elements.saveBtn?.addEventListener("click", () => {
-    saveAnswer();
-    alert("已儲存，你可以稍後回來繼續。>");
-  });
+  if (elements.nextBtn) elements.nextBtn.addEventListener("click", goNext);
+  if (elements.prevBtn) elements.prevBtn.addEventListener("click", goPrev);
+  if (elements.saveBtn) {
+    elements.saveBtn.addEventListener("click", () => {
+      saveAnswer();
+      alert("已儲存，你可以稍後回來繼續。);
+    });
+  }
 };
 
 init();
