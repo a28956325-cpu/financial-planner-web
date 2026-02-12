@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>財務計畫 Web App 原型</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo">FinPlan</div>
+      <nav class="nav">
+        <a href="#landing">首頁</a>
+        <a href="#onboarding">登入/連結</a>
+        <a href="#inputs">資料輸入</a>
+        <a href="#dashboard">儀表板</a>
+      </nav>
+      <button class="primary">免費開始</button>
+    </header>
+
+    <main>
+      <section id="landing" class="hero">
+        <div class="hero-text">
+          <h1>你的財務目標，一個儀表板就搞定</h1>
+          <p>
+            連結銀行與信用卡，輸入目標與預算，系統會提供可達成收支平衡的投資與收入策略。
+          </p>
+          <div class="hero-actions">
+            <button class="primary">開始設定</button>
+            <button class="ghost">看看示範</button>
+          </div>
+          <div class="hero-metrics">
+            <div>
+              <span>每月現金流</span>
+              <strong>+ NT$ 12,500</strong>
+            </div>
+            <div>
+              <span>目標達成率</span>
+              <strong>68%</strong>
+            </div>
+            <div>
+              <span>被動收入</span>
+              <strong>NT$ 6,200</strong>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <h3>本月建議投資</h3>
+          <p class="amount">NT$ 8,000</p>
+          <ul>
+            <li>VOO 45%（大型股）</li>
+            <li>VTI 25%（全市場）</li>
+            <li>QQQ 15%（科技成長）</li>
+            <li>MSFT 15%（個股）</li>
+          </ul>
+          <button class="primary full">查看風險指南</button>
+        </div>
+      </section>
+
+      <section id="onboarding" class="section">
+        <div class="section-header">
+          <h2>登入與帳戶連結</h2>
+          <p>使用聚合 API 連結 Chase 等銀行，或手動輸入。</p>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <h3>1. 登入/註冊</h3>
+            <p>支援 Email 或 Google 登入。</p>
+          </div>
+          <div class="card">
+            <h3>2. 連結銀行</h3>
+            <p>透過 Plaid/Finicity 連接銀行與信用卡。</p>
+          </div>
+          <div class="card">
+            <h3>3. 手動補充</h3>
+            <p>新增資產、負債、每月預算。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="inputs" class="section">
+        <div class="section-header">
+          <h2>財務資料輸入</h2>
+          <p>快速填寫，系統即時計算現金流與目標達成率。</p>
+        </div>
+        <form class="input-form">
+          <div class="form-group">
+            <label>每月收入（NT$）</label>
+            <input type="number" placeholder="例如 80000" />
+          </div>
+          <div class="form-group">
+            <label>每月支出（NT$）</label>
+            <input type="number" placeholder="例如 65000" />
+          </div>
+          <div class="form-group">
+            <label>總資產（NT$）</label>
+            <input type="number" placeholder="例如 1200000" />
+          </div>
+          <div class="form-group">
+            <label>總負債（NT$）</label>
+            <input type="number" placeholder="例如 350000" />
+          </div>
+          <div class="form-group">
+            <label>財務目標</label>
+            <select>
+              <option>每月收支平衡</option>
+              <option>每月增加儲蓄</option>
+              <option>提前退休</option>
+            </select>
+          </div>
+          <button type="button" class="primary">產生建議</button>
+        </form>
+      </section>
+
+      <section id="dashboard" class="section dashboard">
+        <div class="section-header">
+          <h2>儀表板</h2>
+          <p>即時查看投資建議、收入結構與風險提示。</p>
+        </div>
+        <div class="dashboard-grid">
+          <div class="panel">
+            <h3>現金流概覽</h3>
+            <div class="stat">
+              <span>每月收入</span>
+              <strong>NT$ 80,000</strong>
+            </div>
+            <div class="stat">
+              <span>每月支出</span>
+              <strong>NT$ 65,000</strong>
+            </div>
+            <div class="stat highlight">
+              <span>可投資金額</span>
+              <strong>NT$ 8,000</strong>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>主動 vs 被動收入</h3>
+            <div class="bar-group">
+              <div class="bar">
+                <span>主動收入</span>
+                <div class="bar-track"><div class="bar-fill" style="width: 70%"></div></div>
+              </div>
+              <div class="bar">
+                <span>被動收入</span>
+                <div class="bar-track"><div class="bar-fill alt" style="width: 30%"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>風險指南</h3>
+            <p>目前配置偏成長型。若市場波動 15%，建議維持 6 個月生活預備金。</p>
+            <ul>
+              <li>留存現金：NT$ 180,000</li>
+              <li>降低個股比例至 10%</li>
+              <li>增加債券 ETF 15%</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>FinPlan © 2026 — 財務計畫原型</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
