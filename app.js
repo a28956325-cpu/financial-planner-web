@@ -406,7 +406,7 @@ const init = () => {
   if (elements.saveBtn) {
     elements.saveBtn.addEventListener("click", () => {
       saveAnswer();
-      alert("已儲存，你可以稍後回來繼續。);
+      alert("已儲存，你可以稍後回來繼續。");
     });
   }
 };
